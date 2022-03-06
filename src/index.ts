@@ -1,14 +1,7 @@
-import { IDatabase } from "pg-promise";
-import { IClient } from "pg-promise/typescript/pg-subset";
-import {
-  generateEnums,
-  generateInteraces,
-  getEnums,
-  parseEnumTypes,
-  parseTableNames,
-} from "./parsers";
 import { IDatabaseConfiguration } from "./types";
 import pg from "./db";
+import { createTableAs } from "./utilities";
+import { TableTypes } from "./output/types";
 require("dotenv").config();
 
 const config: IDatabaseConfiguration = {
@@ -18,30 +11,39 @@ const config: IDatabaseConfiguration = {
   user: process.env.USER as string,
 };
 
-const rootPath = __dirname.replace("dist", "src/output");
+const db = pg.db(config);
 
-(async () => {
-  try {
-    const db: IDatabase<unknown, IClient> = await pg.db(config);
+const outputPath = __dirname.replace("dist", "src/output");
 
-    const tableNames = await parseTableNames(db, pg.sql("select-table-names"));
-    const enums = await getEnums(db, pg.sql("select-enum-types"));
+// --> Run 
+// run(db, outputPath).then(() => {
+//   console.log("done");
+// });
 
-    const enumMap = enums.reduce(
-      (acc: Map<string, string[]>, curr) =>
-        acc.set(curr.enum_name, curr.enum_value.split(",")),
-      new Map()
-    );
+// --> Idea of creating an object from interface
+// const instanciate = <T>(obj: T extends infer T ? T : never) => obj
 
-    await generateEnums(rootPath, enums);
-    await generateInteraces(
-      db,
-      rootPath,
-      tableNames,
-      pg.sql("select-information-schema"),
-      enumMap
-    );
-  } catch (error) {
-    console.error(error);
-  }
-})();
+// const xs = instanciate<IUsers>({
+// 	'id': '',
+// 	'name': '',
+// 	'value': ''
+// })
+
+const q = createTableAs('users', __dirname.replace("dist", "/sql/ddl.sql"));
+console.log(q);
+
+
+// --> idea of using the pg-promise library for inserting and updating records
+async function insertInto<T extends object>(
+  obj: T extends infer T ? T : never,
+  table: TableTypes
+) {
+  db.$config.pgp.helpers.insert(obj, Object.keys(obj), table);
+}
+
+async function updateInto<T extends object>(
+  obj: T extends infer T ? Partial<T> : never,
+  table: TableTypes
+) {
+  db.$config.pgp.helpers.insert(obj, Object.keys(obj), table);
+}

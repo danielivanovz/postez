@@ -80,6 +80,28 @@ export async function parseTableNames(
   );
 }
 
+export async function generateTableTypes(rootPath: string, tables: string[]) {
+  const schemaPath = rootPath + "/types.ts";
+  const prettierConfig = prettier.resolveConfig(rootPath);
+
+  const tablesTypes = `export type TableTypes = ${tables
+    .map((x) => `'${x}'`)
+    .join(" | ")}`;
+
+  try {
+    if (!fs.existsSync(rootPath)) fs.mkdirSync(rootPath);
+
+    fs.writeFileSync(
+      schemaPath,
+      prettier.format(tablesTypes, { ...prettierConfig, filepath: schemaPath })
+    );
+
+    console.log(`Types generated successfully`);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function parseSchema(
   db: IDatabase<unknown, IClient>,
   tableNamesCollection: string[],
