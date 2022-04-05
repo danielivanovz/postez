@@ -1,0 +1,39 @@
+{
+  "name": "postez",
+  "version": "1.0.0",
+  "description": "Utility package for dynamically generate interfaces from PostgreSQL, and use in-memory testing around pg-promise and pg-mem",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run nodemon",
+		"compile": "npm run format && npm run lint && npm run watch",
+    "lint": "eslint --ext .js,.ts",
+    "format": "prettier --write 'src/**/*.{ts,json}'",
+		"nodemon": "nodemon dist/index.js",
+		"copy": "cp -R sql dist",
+		"watch": "npm run copy && tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielivanovz/postez.git"
+  },
+  "author": "Daniel Ivanov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/danielivanovz/postez/issues"
+  },
+  "homepage": "https://github.com/danielivanovz/postez#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.21",
+    "eslint": "^8.10.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1",
+    "ts-node": "^10.6.0",
+    "typescript": "^4.6.2"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "pg-promise": "^10.11.1"
+  }
+}
