@@ -1,7 +1,7 @@
 import { IDatabase } from "pg-promise";
 import { IClient } from "pg-promise/typescript/pg-subset";
 import pg from "./db";
-import { TableTypes } from './output/types';
+// import { TableTypes } from "./output/types";
 import {
   generateEnums,
   generateInteraces,
@@ -41,8 +41,8 @@ export async function run(db: IDatabase<unknown, IClient>, rootPath: string) {
   await generateInteraces(db, rootPath, tables, interfaceSQL, enumsMap);
 }
 
-export function createTableAs(table: TableTypes, pathDDL: string) {
-	const DDL = fs.readFileSync(pathDDL, 'utf-8');
-	const occ = DDL.indexOf(`CREATE TABLE ` + table);
-	return DDL.substring(occ, DDL.indexOf(";", occ+1)).trim()
-}
+// export function createTableAs(table: TableTypes, pathDDL: string) {
+//   const DDL = fs.readFileSync(pathDDL, "utf-8");
+//   const occ = DDL.indexOf(`CREATE TABLE ` + table);
+//   return DDL.substring(occ, DDL.indexOf(";", occ + 1)).trim();
+// }

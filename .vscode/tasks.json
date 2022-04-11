@@ -1,0 +1,28 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Open SSH tunnel (noprod development)",
+			"type": "shell",
+			"command": "ssh -i ${input:key} -N -L 5432:mry2q58a2kv9jz.camtpqapkp8e.eu-central-1.rds.amazonaws.com:5432 ec2-user@3.124.236.65"
+		},
+		{
+			"label": "Open SSH tunnel (noprod staging)",
+			"type": "shell",
+			"command": "ssh -i ${input:key} -N -L 5432:mr1vcbtm6a6y5ov.camtpqapkp8e.eu-central-1.rds.amazonaws.com:5432 ec2-user@3.124.236.65"
+		},
+		{
+			"label": "Open SSH tunnel (production)",
+			"type": "shell",
+			"command": "ssh -i ${input:key} -N -L 5432:bepower-cluster-1.cluster-cabmpfipwbxo.eu-central-1.rds.amazonaws.com:5432 ec2-user@18.184.181.15"
+		}
+],
+	"inputs": [{
+		"id": "key",
+		"description": "private RSA full path",
+		"type": "promptString",
+		"default": "~/.ssh/id_rsa"
+}]
+}

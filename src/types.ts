@@ -3,6 +3,7 @@ export interface IDatabaseConfiguration {
   port: string;
   database: string;
   user: string;
+  password: string;
 }
 
 export interface ISchema {
