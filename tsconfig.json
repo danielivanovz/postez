@@ -16,5 +16,11 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "removeComments": true
-  }
+  },
+	"include": [
+		"src/**/*.ts"
+	],
+	"exclude": [
+		"node_modules"
+	]
 }
