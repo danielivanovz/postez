@@ -15,7 +15,8 @@
     "noImplicitReturns": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "removeComments": true
+    "removeComments": true,
+		"resolveJsonModule": true
   },
 	"include": [
 		"src/**/*.ts"

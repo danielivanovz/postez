@@ -1,36 +1,37 @@
 export interface IDatabaseConfiguration {
-	host: string
-	port: string
-	database: string
-	user: string
-	password?: string
-	privateKey?: string
+  host: string
+  port: string
+  database: string
+  user: string
+  password?: string
+  privateKey?: string
 }
 
 export interface ISchema {
-	column_name: string
-	udt_name: Types
-	is_nullable: 'YES' | 'NO'
+  column_name: string
+  udt_name: Types
+  is_nullable: 'YES' | 'NO'
 }
 
 export interface IEnumSchema {
-	enum_name: string
-	enum_value: string
+  enum_name: string
+  enum_value: string
 }
 
 type StringType =
-	| 'bpchar'
-	| 'char'
-	| 'varchar'
-	| 'text'
-	| 'citext'
-	| 'uuid'
-	| 'bytea'
-	| 'inet'
-	| 'time'
-	| 'timetz'
-	| 'interval'
-	| 'name'
+  | 'bpchar'
+  | 'char'
+  | 'varchar'
+  | 'text'
+  | 'citext'
+  | 'uuid'
+  | 'bytea'
+  | 'inet'
+  | 'time'
+  | 'timetz'
+  | 'interval'
+  | 'name'
+
 type NumberType = 'int2' | 'int4' | 'int8' | 'float4' | 'float8' | 'numeric' | 'money' | 'oid'
 type BooleanType = 'bool' | 'boolean'
 type ObjectType = 'json' | 'jsonb'
@@ -42,13 +43,13 @@ type DateArrayType = '_timestamptz'
 type DateType = 'date' | 'time' | 'timestamp' | 'timestamptz'
 
 export type Types =
-	| StringType
-	| NumberType
-	| BooleanType
-	| ObjectType
-	| NumberArrayType
-	| StringArrayType
-	| BooleanArrayType
-	| ObjectArrayType
-	| DateArrayType
-	| DateType
+  | StringType
+  | NumberType
+  | BooleanType
+  | ObjectType
+  | NumberArrayType
+  | StringArrayType
+  | BooleanArrayType
+  | ObjectArrayType
+  | DateArrayType
+  | DateType

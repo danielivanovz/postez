@@ -6,7 +6,7 @@
 		{
 			"label": "Open SSH tunnel (noprod development)",
 			"type": "shell",
-			"command": "ssh -i ${input:key} -N -L 5432:mry2q58a2kv9jz.camtpqapkp8e.eu-central-1.rds.amazonaws.com:5432 ec2-user@3.124.236.65"
+			"command": "ssh -i ${input:key} -N -L 5432:middleware-development-rds-rds-xts8jtbmnxrx.camtpqapkp8e.eu-central-1.rds.amazonaws.com:5432 ec2-user@3.124.236.65"
 		},
 		{
 			"label": "Open SSH tunnel (noprod staging)",
