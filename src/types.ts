@@ -61,7 +61,7 @@ export interface ICustomType {
   definition: string
 }
 
-export interface ISchema {
+export interface ITypesSchema {
   string: StringType[]
   number: NumberType[]
   boolean: BooleanType[]

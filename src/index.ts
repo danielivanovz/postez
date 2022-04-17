@@ -1,8 +1,9 @@
 import * as dotenv from 'dotenv'
 
-import { IDatabaseConfiguration, ISchema } from './types'
 import pg from './db'
-import { gen } from './utilities'
+
+import { IDatabaseConfiguration, ITypesSchema } from './types'
+import { postez } from './utilities'
 
 dotenv.config()
 
@@ -14,9 +15,7 @@ const config: IDatabaseConfiguration = {
   password: process.env.PASSWORD,
 }
 
-const db = pg.db(config)
-
-export const schema: ISchema = {
+export const schema: ITypesSchema = {
   string: [
     'bpchar',
     'char',
@@ -50,7 +49,7 @@ export const schema: ISchema = {
 }
 ;(async () => {
   try {
-    await gen(db, __dirname.replace('dist', 'src/output'), schema)
+    await postez(pg.db(config), __dirname.replace('dist', 'src/output'), schema)
   } catch (error) {
     console.error(error)
   }

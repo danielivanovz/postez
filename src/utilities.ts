@@ -6,9 +6,8 @@ import { IClient } from 'pg-promise/typescript/pg-subset'
 
 import pg from './db'
 
-import { IEnumSchema, ISchema } from './types'
-import { parseTableNames, getEnums, parseEnumTypes, parseInterfaces } from './parsers'
-import { parseCustomType } from './parsers/customType'
+import { IEnumSchema, ITypesSchema } from './types'
+import { parseTableNames, getEnums, parseEnumTypes, parseInterfaces, parseCustomType } from './parsers'
 
 export function sanitizeName(name: string, prefix: string = '', splitters: string[] = ['_', '-']) {
   return name
@@ -35,7 +34,7 @@ export async function writeToFile(path: string, content: string[], name: string)
   )
 }
 
-export async function gen(db: IDatabase<unknown, IClient>, outputPath: string, schema: ISchema) {
+export async function postez(db: IDatabase<unknown, IClient>, outputPath: string, schema: ITypesSchema) {
   const tables = await parseTableNames(db, pg.sql('select-table-names'))
   const enums = await getEnums(db, pg.sql('select-enum-names'))
 

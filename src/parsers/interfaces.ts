@@ -1,6 +1,6 @@
 import { IDatabase, QueryFile } from 'pg-promise'
 import { IClient } from 'pg-promise/typescript/pg-subset'
-import { IInterfaces, ISchema } from '../types'
+import { IInterfaces, ITypesSchema } from '../types'
 import { sanitizeName } from '../utilities'
 import { parseSchema, typeParser } from './datatypes'
 
@@ -9,7 +9,7 @@ export async function parseInterfaces(
   tableNamesCollection: string[],
   selectInformationSchema: QueryFile,
   enums: Map<string, string[]>,
-  _schema: ISchema,
+  _schema: ITypesSchema,
 ) {
   const typeSchema = parseSchema(_schema)
 
