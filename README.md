@@ -1,11 +1,8 @@
 <h1 align="center">postez</h1>
-
-<h5 align="center">Utility tool for dynamically generate interfaces and types from PostgreSQL using custom schema.</h5>
-
+<h6 align="center">Utility tool for dynamically generate interfaces and types from PostgreSQL using custom schema.</h5>
 <br>
 
 ## Usage
-
 Define a schema as 
 ```ts
 schema = {
