@@ -5,36 +5,36 @@ import { sanitizeName } from '../utilities'
 import { parseSchema, typeParser } from './datatypes'
 
 export async function parseInterfaces(
-	db: IDatabase<unknown, IClient>,
-	tableNamesCollection: string[],
-	selectInformationSchema: QueryFile,
-	enums: Map<string, string[]>,
-	_schema: ISchema,
+  db: IDatabase<unknown, IClient>,
+  tableNamesCollection: string[],
+  selectInformationSchema: QueryFile,
+  enums: Map<string, string[]>,
+  _schema: ISchema,
 ) {
-	const typeSchema = parseSchema(_schema)
+  const typeSchema = parseSchema(_schema)
 
-	return await Promise.all(
-		tableNamesCollection.map(async (tableName) => {
-			const schema = (await db.manyOrNone(selectInformationSchema, {
-				table_name: tableName,
-			})) as IInterfaces[]
+  return await Promise.all(
+    tableNamesCollection.map(async (tableName) => {
+      const schema = (await db.manyOrNone(selectInformationSchema, {
+        table_name: tableName,
+      })) as IInterfaces[]
 
-			const currInterface = schema.reduce((acc, curr) => {
-				const type = typeParser(curr.udt_name, enums, typeSchema)
+      const currInterface = schema.reduce((acc, curr) => {
+        const type = typeParser(curr.udt_name, enums, typeSchema)
 
-				const name = curr.column_name
+        const name = curr.column_name
 
-				acc[name] = type + (curr.is_nullable === 'NO' ? '' : ' | null')
-				return acc
-			}, {} as Record<string, string>)
+        acc[name] = type + (curr.is_nullable === 'NO' ? '' : ' | null')
+        return acc
+      }, {} as Record<string, string>)
 
-			const interfaceName = sanitizeName(tableName, 'I')
+      const interfaceName = sanitizeName(tableName, 'I')
 
-			return `export interface ${interfaceName} {
+      return `export interface ${interfaceName} {
 			${Object.keys(currInterface)
-				.map((key) => `${key}: ${currInterface[key]}`)
-				.join('\n')}
+        .map((key) => `${key}: ${currInterface[key]}`)
+        .join('\n')}
 			}`
-		}),
-	)
+    }),
+  )
 }

@@ -32,6 +32,10 @@ then just pass it as an argument with a database connection and output path:
 await gen(db, __dirname.replace('dist', 'src/output'), schema)
 ```
 
+## Todo
+
+- add CLI usage
+
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
