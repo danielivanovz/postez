@@ -29,7 +29,7 @@ schema = {
 then just pass it as an argument with a database connection and output path:
 
 ``` ts
-await gen(db, __dirname.replace('dist', 'src/output'), schema)
+await postez(db, __dirname.replace('dist', 'src/output'), schema)
 ```
 
 ## Todo
