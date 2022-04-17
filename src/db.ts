@@ -5,9 +5,9 @@ import { IDatabaseConfiguration } from './types'
 const pgp = require('pg-promise')({})
 
 const pg = {
-  pgp: pgp,
-  db: (config: IDatabaseConfiguration | string): IDatabase<unknown, IClient> => pgp(config),
-  sql: (args: string): QueryFile => new QueryFile(join(__dirname, 'sql', args + '.sql'), { minify: true }),
+	pgp: pgp,
+	db: (config: IDatabaseConfiguration | string): IDatabase<unknown, IClient> => pgp(config),
+	sql: (args: string): QueryFile => new QueryFile(join(__dirname, 'sql', args + '.sql'), { minify: true }),
 }
 
 export default pg
