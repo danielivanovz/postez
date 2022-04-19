@@ -5,13 +5,19 @@
   "main": "index.js",
   "scripts": {
     "dev": "npm run nodemon",
+		"build": "npm run build:prod && npm run copy",
+		"build:prod": "tsc --build",
+		"build:dev": "tsc --build --watch",
+		"clean": "rimraf dist",
+		"copy": "cp -R sql dist",
+		"start": "npm run dev",
+		"prebuild": "npm run format && npm run lint",
     "compile": "npm run format && npm run lint && npm run watch",
     "lint": "eslint --ext .js,.ts",
     "format": "prettier --write 'src/**/*.{ts,json}'",
     "nodemon": "nodemon dist/index.js",
-    "copy": "cp -R sql dist",
     "watch": "npm run copy && tsc -w",
-		"test": "exit 0"
+    "test": "exit 0"
   },
   "repository": {
     "type": "git",
@@ -22,9 +28,9 @@
   "bugs": {
     "url": "https://github.com/danielivanovz/postez/issues"
   },
-	"publishConfig": {
-		"@danielivanvoz:registry": "https://npm.pkg.github.com"
-	},
+  "publishConfig": {
+    "@danielivanvoz:registry": "https://npm.pkg.github.com"
+  },
   "homepage": "https://github.com/danielivanovz/postez#readme",
   "devDependencies": {
     "@types/node": "^17.0.21",

@@ -2,6 +2,7 @@
   "compilerOptions": {
     "types": ["node"],
     "outDir": "./dist",
+		"declarationDir": "./dist/types/",
     "module": "commonjs",
     "target": "es2019",
     "noImplicitAny": false,
@@ -9,7 +10,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
-    "declaration": false,
+    "declaration": true,
     "listFiles": false,
     "strict": true,
     "noImplicitReturns": true,

@@ -15,8 +15,8 @@ const config: Postez.IDatabaseConfiguration = {
 }
 
 export declare namespace Postez {
-	export const postgrez: typeof main
-	export const pgp: typeof pg
-	export type IDatabaseConfiguration = Types.IDatabaseConfiguration
-	export type ISchema = Types.TSchema
+  export const postgrez: typeof main
+  export const pgp: typeof pg
+  export type IDatabaseConfiguration = Types.IDatabaseConfiguration
+  export type ISchema = Types.TSchema
 }
