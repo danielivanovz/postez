@@ -106,4 +106,5 @@ dist
 sql/ddl.sql
 **/output/
 
+.vscode/
 .vscode/tasks.json
