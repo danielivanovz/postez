@@ -9,6 +9,39 @@ import pg from './db'
 import { IEnumSchema, ITypesSchema } from './types'
 import { parseTableNames, getEnums, parseEnumTypes, parseInterfaces, parseCustomType } from './parsers'
 
+export const defaultSchema: ITypesSchema = {
+  string: [
+    'bpchar',
+    'char',
+    'varchar',
+    'text',
+    'citext',
+    'uuid',
+    'bytea',
+    'inet',
+    'time',
+    'timetz',
+    'interval',
+    'name',
+  ],
+  number: ['int2', 'int4', 'int8', 'float4', 'float8', 'numeric', 'money', 'oid'],
+  boolean: ['bool', 'boolean'],
+  Date: ['date', 'timestamp', 'timestamptz'],
+  'Array<number>': ['_int2', '_int4', '_int8', '_float4', '_float8', '_numeric', '_money'],
+  'Array<boolean>': ['_bool', '_boolean'],
+  'Array<string>': ['_varchar', '_text', '_citext', '_uuid', '_bytea'],
+  Object: ['json', 'jsonb'],
+  'Array<Object>': ['_json', '_jsonb'],
+  'Array<Date>': ['_timestamptz'],
+  CustomTypes: [
+    {
+      name: 'point',
+      type: 'Coordinates',
+      definition: 'export interface Coordinates { x: number; y: number; }',
+    },
+  ],
+}
+
 export function sanitizeName(name: string, prefix: string = '', splitters: string[] = ['_', '-']) {
   return name
     .split(new RegExp(splitters.join('|')))
@@ -34,7 +67,7 @@ export async function writeToFile(path: string, content: string[], name: string)
   )
 }
 
-export async function postez(db: IDatabase<unknown, IClient>, outputPath: string, schema: ITypesSchema) {
+export async function postez(db: IDatabase<unknown, IClient>, outputPath: string, schema: ITypesSchema = defaultSchema) {
   const tables = await parseTableNames(db, pg.sql('select-table-names'))
   const enums = await getEnums(db, pg.sql('select-enum-names'))
 
