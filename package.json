@@ -10,7 +10,8 @@
     "format": "prettier --write 'src/**/*.{ts,json}'",
     "nodemon": "nodemon dist/index.js",
     "copy": "cp -R sql dist",
-    "watch": "npm run copy && tsc -w"
+    "watch": "npm run copy && tsc -w",
+		"test": "exit 0"
   },
   "repository": {
     "type": "git",
