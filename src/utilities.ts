@@ -67,7 +67,14 @@ export async function writeToFile(path: string, content: string[], name: string)
   )
 }
 
-export async function postez(db: IDatabase<unknown, IClient>, outputPath: string, schema: ITypesSchema = defaultSchema) {
+/**
+ * Creates a file containing all database entities and their respective interfaces
+ * @param {IDatabase<unknown, IClient>} db
+ * @param {string} outputPath
+ * @param {ITypesSchema} schema
+ * @void will write a file to the outputPath
+ */
+export async function main(db: IDatabase<unknown, IClient>, outputPath: string, schema: ITypesSchema = defaultSchema) {
   const tables = await parseTableNames(db, pg.sql('select-table-names'))
   const enums = await getEnums(db, pg.sql('select-enum-names'))
 

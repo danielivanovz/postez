@@ -1,13 +1,12 @@
 import * as dotenv from 'dotenv'
 
 import pg from './db'
-
-import { IDatabaseConfiguration, ITypesSchema } from './types'
-import { postez } from './utilities'
+import * as Types from './types'
+import { main } from './utilities'
 
 dotenv.config()
 
-const config: IDatabaseConfiguration = {
+const config: Postez.IDatabaseConfiguration = {
   host: 'localhost',
   port: process.env.PORT,
   database: process.env.DATABASE,
@@ -15,10 +14,9 @@ const config: IDatabaseConfiguration = {
   password: process.env.PASSWORD,
 }
 
-;(async () => {
-  try {
-    await postez(pg.db(config), __dirname.replace('dist', 'src/output'))
-  } catch (error) {
-    console.error(error)
-  }
-})()
+export declare namespace Postez {
+	export const postgrez: typeof main
+	export const pgp: typeof pg
+	export type IDatabaseConfiguration = Types.IDatabaseConfiguration
+	export type ISchema = Types.TSchema
+}
