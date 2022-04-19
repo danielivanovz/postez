@@ -29,7 +29,7 @@
     "url": "https://github.com/danielivanovz/postez/issues"
   },
   "publishConfig": {
-    "@danielivanvoz:registry": "https://npm.pkg.github.com"
+    "@danielivanovz:registry": "https://npm.pkg.github.com"
   },
   "homepage": "https://github.com/danielivanovz/postez#readme",
   "devDependencies": {
