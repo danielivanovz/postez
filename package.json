@@ -1,5 +1,5 @@
 {
-  "name": "postez",
+  "name": "@danielivanovz/postez",
   "version": "1.0.0",
   "description": "Utility tool for dynamically generate interfaces from PostgreSQL",
   "main": "index.js",
@@ -21,6 +21,9 @@
   "bugs": {
     "url": "https://github.com/danielivanovz/postez/issues"
   },
+	"publishConfig": {
+		"@danielivanvoz:registry": "https://npm.pkg.github.com"
+	},
   "homepage": "https://github.com/danielivanovz/postez#readme",
   "devDependencies": {
     "@types/node": "^17.0.21",
