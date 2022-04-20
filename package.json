@@ -1,6 +1,6 @@
 {
   "name": "@danielivanovz/postez",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Utility tool for dynamically generate interfaces from PostgreSQL",
   "main": "index.js",
   "scripts": {
