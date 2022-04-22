@@ -1,34 +1,34 @@
-import { ICustomType, ITypesSchema, TParsedSchema, Types } from '../types'
-import { sanitizeName } from '../utilities'
+import { ICustomType, ITypesSchema, TParsedSchema, Types } from '../types';
+import { sanitizeName } from '../utilities';
 
 export function parseSchema(schema: Partial<ITypesSchema>): Record<Types, keyof ITypesSchema> {
   return Object.keys(schema).reduce((acc, curr) => {
     acc = schema[curr].reduce((_: never, _curr: string | ICustomType) => {
       if (curr === 'CustomTypes' && typeof _curr === 'object') {
-        acc[_curr.name] = _curr.type
+        acc[_curr.name] = _curr.type;
       }
       // @ts-ignore
-      acc[_curr] = curr
-      return acc
-    }, {})
-    return acc
-  }, {} as Record<Types, keyof ITypesSchema>)
+      acc[_curr] = curr;
+      return acc;
+    }, {});
+    return acc;
+  }, {} as Record<Types, keyof ITypesSchema>);
 }
 
 export function enumType(enums: Map<string, string[]>, type: string) {
-  if (enums.has(type)) return sanitizeName(type, 'E')
-  if (enums.has(type.replace('_', ''))) return `Array<${sanitizeName(type, 'E')}>`
+  if (enums.has(type)) return sanitizeName(type, 'E');
+  if (enums.has(type.replace('_', ''))) return `Array<${sanitizeName(type, 'E')}>`;
 
-  console.info(`Cannot find type ${type}`)
+  console.info(`Cannot find type ${type}`);
 
-  return 'unknown'
+  return 'unknown';
 }
 
 export function typeParser(type: Types, enums: Map<string, string[]>, schema: TParsedSchema) {
   switch (schema[type]) {
     case undefined:
-      return enumType(enums, type)
+      return enumType(enums, type);
     default:
-      return schema[type]
+      return schema[type];
   }
 }

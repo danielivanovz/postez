@@ -1,24 +1,25 @@
 {
-  "name": "@danielivanovz/postez",
+  "name": "postez",
   "version": "1.0.3",
   "description": "Utility tool for dynamically generate interfaces from PostgreSQL",
-  "main": "index.js",
+	"main": "lib/index.js",
+	"types": "lib/index.d.ts",
   "scripts": {
-    "dev": "npm run nodemon",
-    "build": "npm run build:prod && npm run copy",
-    "build:prod": "tsc --build",
-    "build:dev": "tsc --build --watch",
-    "clean": "rimraf dist",
-    "copy": "cp -R sql dist",
-    "start": "npm run dev",
-    "prebuild": "npm run format && npm run lint",
-    "compile": "npm run format && npm run lint && npm run watch",
-    "lint": "eslint --ext .js,.ts",
-    "format": "prettier --write 'src/**/*.{ts,json}'",
-    "nodemon": "nodemon dist/index.js",
-    "watch": "npm run copy && tsc -w",
-    "test": "exit 0"
+		"compile": "npm run format && npm run lint",
+		"compile:dev": "npm run format && npm run lint && npm run watch",
+		"version" : "npm run format && git add -A src",
+		"postversion" : "git push && git push --tags",
+		"start:dev": "npm run nodemon",
+		"prebuild": "npm run compile",
+		"build": "npm run build:prod && npm run copy",
+		"build:prod": "tsc --build",
+		"copy": "cp -R sql lib",
+		"nodemon": "nodemon dist/index.js",
+		"watch": "npm run copy && tsc -w",
+		"lint": "tslint -p tsconfig.json",
+    "format": "prettier --write 'src/**/*.{ts,js,json}'"
   },
+	"files": ["lib/**/*"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/danielivanovz/postez.git"
@@ -28,9 +29,6 @@
   "bugs": {
     "url": "https://github.com/danielivanovz/postez/issues"
   },
-  "publishConfig": {
-    "@danielivanovz:registry": "https://npm.pkg.github.com"
-  },
   "homepage": "https://github.com/danielivanovz/postez#readme",
   "devDependencies": {
     "@types/node": "^17.0.21",
@@ -39,8 +37,10 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "nodemon": "^2.0.15",
-    "prettier": "^2.5.1",
+    "prettier": "^2.6.2",
     "ts-node": "^10.6.0",
+    "tslint": "^6.1.3",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.6.2"
   },
   "dependencies": {
