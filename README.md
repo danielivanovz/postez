@@ -26,10 +26,32 @@ schema = {
 }
 ```
 
-then just pass it as an argument with a database connection and output path:
+then just pass it as an argument with a database connection and output path, otherwise you can use a default schema and `pg-promise` as simple as:
 
 ``` ts
-await postez(db, __dirname.replace('dist', 'src/output'), schema)
+import pg from 'postez/lib/db'
+import { postez } from "postez";
+
+const configuration = {
+	user: 'username',
+	password: 'password',
+	host: 'host',
+	port: 'port',
+	database: 'database'
+}
+
+const db = pg.db(configuration)
+const path = process.cwd().replace('./dist', './output');
+
+postez(db, path)
+  .then(() => console.log("Done."))
+  .catch((e) => console.error(e));
+```
+
+on successfull run it will prompt out the following:
+
+```
+Succesfully generated files in: <path>/output/types.ts
 ```
 
 ## Todo
