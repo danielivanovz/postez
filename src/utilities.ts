@@ -76,16 +76,13 @@ export async function writeToFile(path: string, content: string[], name: string)
  */
 export async function main(db: IDatabase<unknown, IClient>, outputPath: string, schema: ITypesSchema = defaultSchema) {
   const tables = await parseTableNames(db, pg.sql('select-table-names'));
+  const views = await parseTableNames(db, pg.sql('select-view-names'));
   const enums = await getEnums(db, pg.sql('select-enum-names'));
 
   const _enums = await parseEnumTypes(enums);
-  const _interfaces = await parseInterfaces(
-    db,
-    tables,
-    pg.sql('select-table-information'),
-    generateEnumMap(enums),
-    schema,
-  );
+  const _interfaces = (
+    await parseInterfaces(db, tables, pg.sql('select-table-information'), generateEnumMap(enums), schema)
+  ).concat(await parseInterfaces(db, views, pg.sql('select-table-information'), generateEnumMap(enums), schema));
   const _customTypes = parseCustomType(schema);
 
   try {
