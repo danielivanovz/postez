@@ -17,7 +17,8 @@
     "nodemon": "nodemon dist/index.js",
     "watch": "npm run copy && tsc -w",
     "lint": "tslint -p tsconfig.json",
-    "format": "prettier --write 'src/**/*.{ts,js,json}'"
+    "format": "prettier --write 'src/**/*.{ts,js,json}'",
+    "prepublish": "npm version && git push && git push --tags"
   },
   "files": [
     "lib/**/*"
