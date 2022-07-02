@@ -86,7 +86,7 @@ export async function main(db: IDatabase<unknown, IClient>, outputPath: string, 
   const _customTypes = parseCustomType(schema);
 
   try {
-    writeToFile(outputPath, _enums.concat(_customTypes, _interfaces), 'types');
+    await writeToFile(outputPath, _enums.concat(_customTypes, _interfaces), 'types');
     console.info('Succesfully generated files in:', outputPath);
   } catch (error) {
     console.error(error);
