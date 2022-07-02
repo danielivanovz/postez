@@ -110,3 +110,4 @@ sql/ddl.sql
 .vscode/tasks.json
 
 types.ts
+lib/sql/ddl.sql
