@@ -28,7 +28,7 @@ export async function parseInterfaces(
         return acc;
       }, {} as Record<string, string>);
 
-      const interfaceName = sanitizeName(tableName, 'I');
+      const interfaceName = sanitizeName(tableName, 'Table');
 
       return `export interface ${interfaceName} {
 			${Object.keys(currInterface)
