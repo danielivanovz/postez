@@ -71,19 +71,26 @@ export async function writeToFile(path: string, content: string[], name: string)
  * Creates a file containing all database entities and their respective interfaces
  * @param {IDatabase<unknown, IClient>} db
  * @param {string} outputPath
- * @param {ITypesSchema} schema
+ * @param {ITypesSchema} typesSchema
  * @void will write a file to the outputPath
  */
-export async function main(db: IDatabase<unknown, IClient>, outputPath: string, schema: ITypesSchema = defaultSchema) {
-  const tables = await parseTableNames(db, pg.sql('select-table-names'));
-  const views = await parseTableNames(db, pg.sql('select-view-names'));
-  const enums = await getEnums(db, pg.sql('select-enum-names'));
+export async function main(
+  db: IDatabase<unknown, IClient>,
+  outputPath: string,
+  typesSchema: ITypesSchema = defaultSchema,
+  schema: string = 'public',
+) {
+  const tables = await parseTableNames(db, pg.sql('select-table-names'), schema);
+  const views = await parseTableNames(db, pg.sql('select-view-names'), schema);
+  const enums = await getEnums(db, pg.sql('select-enum-names'), schema);
 
   const _enums = await parseEnumTypes(enums);
   const _interfaces = (
-    await parseInterfaces(db, tables, pg.sql('select-table-information'), generateEnumMap(enums), schema)
-  ).concat(await parseInterfaces(db, views, pg.sql('select-table-information'), generateEnumMap(enums), schema));
-  const _customTypes = parseCustomType(schema);
+    await parseInterfaces(db, tables, pg.sql('select-table-information'), generateEnumMap(enums), typesSchema, schema)
+  ).concat(
+    await parseInterfaces(db, views, pg.sql('select-table-information'), generateEnumMap(enums), typesSchema, schema),
+  );
+  const _customTypes = parseCustomType(typesSchema);
 
   try {
     await writeToFile(outputPath, _enums.concat(_customTypes, _interfaces), 'types');

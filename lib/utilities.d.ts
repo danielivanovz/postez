@@ -9,7 +9,7 @@ export declare function writeToFile(path: string, content: string[], name: strin
  * Creates a file containing all database entities and their respective interfaces
  * @param {IDatabase<unknown, IClient>} db
  * @param {string} outputPath
- * @param {ITypesSchema} schema
+ * @param {ITypesSchema} typesSchema
  * @void will write a file to the outputPath
  */
-export declare function main(db: IDatabase<unknown, IClient>, outputPath: string, schema?: ITypesSchema): Promise<void>;
+export declare function main(db: IDatabase<unknown, IClient>, outputPath: string, typesSchema?: ITypesSchema, schema?: string): Promise<void>;

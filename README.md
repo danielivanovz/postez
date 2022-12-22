@@ -3,9 +3,9 @@
 <br>
 
 ## Usage
-Define a schema as 
+Define a types schema as 
 ```ts
-schema = {
+typesSchema = {
  'string': [ 'bpchar', 'char', 'varchar', 'text', 'citext', 'uuid' ],
  'number': ['int2', 'int4', 'int8', 'float4', 'float8', 'numeric' ],
  'boolean': ['bool', 'boolean'],
@@ -26,7 +26,23 @@ schema = {
 }
 ```
 
-then just pass it as an argument with a database connection and output path, otherwise you can use a default schema and `pg-promise` as simple as:
+then just pass it as an argument with a database connection and output path. 
+
+``` ts
+postez(db, path, typesSchema)
+  .then(() => console.log("Done."))
+  .catch((e) => console.error(e));
+```
+
+You can also specify the name of table schema you want to generate types.ts.
+
+``` ts
+postez(db, path, typesSchema, 'custom_name')
+  .then(() => console.log("Done."))
+  .catch((e) => console.error(e));
+```
+
+Otherwise you can use a default types schema (table schema name is 'public' by default if not specified) and `pg-promise` as simple as:
 
 ``` ts
 import pg from 'postez/lib/db'
