@@ -9,7 +9,7 @@ import pg from './db';
 import { IEnumSchema, ITypesSchema } from './types';
 import { parseTableNames, getEnums, parseEnumTypes, parseInterfaces, parseCustomType } from './parsers';
 
-export const defaultSchema: ITypesSchema = {
+export const defaultTypesSchema: ITypesSchema = {
   string: [
     'bpchar',
     'char',
@@ -72,12 +72,13 @@ export async function writeToFile(path: string, content: string[], name: string)
  * @param {IDatabase<unknown, IClient>} db
  * @param {string} outputPath
  * @param {ITypesSchema} typesSchema
+ * @param {string} schema
  * @void will write a file to the outputPath
  */
 export async function main(
   db: IDatabase<unknown, IClient>,
   outputPath: string,
-  typesSchema: ITypesSchema = defaultSchema,
+  typesSchema: ITypesSchema = defaultTypesSchema,
   schema: string = 'public',
 ) {
   const tables = await parseTableNames(db, pg.sql('select-table-names'), schema);
