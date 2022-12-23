@@ -37,7 +37,7 @@ postez(db, path, typesSchema)
 You can also specify the name of table schema you want to generate types.ts.
 
 ``` ts
-postez(db, path, typesSchema, 'custom_name')
+postez(db, path, typesSchema, 'schema_name')
   .then(() => console.log("Done."))
   .catch((e) => console.error(e));
 ```
