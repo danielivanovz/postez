@@ -1,7 +1,7 @@
 import { ICustomType, ITypesSchema, TParsedSchema, Types } from '../types';
 import { sanitizeName } from '../utilities';
 
-export function parseSchema(schema: Partial<ITypesSchema>): Record<Types, keyof ITypesSchema> {
+export function parseTypesSchema(schema: Partial<ITypesSchema>): Record<Types, keyof ITypesSchema> {
   return Object.keys(schema).reduce((acc, curr) => {
     acc = schema[curr].reduce((_: never, _curr: string | ICustomType) => {
       if (curr === 'CustomTypes' && typeof _curr === 'object') {
