@@ -1,6 +1,6 @@
 {
   "name": "postez",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "description": "Utility tool for dynamically generate interfaces from PostgreSQL",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
