@@ -5,4 +5,4 @@ SELECT
 FROM 
    information_schema.columns
 WHERE 
-   table_name = ${table_name} and table_schema = 'public'
+   table_name = ${table_name} and table_schema = ${ schema }

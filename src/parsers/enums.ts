@@ -14,6 +14,6 @@ export async function parseEnumTypes(enums: IEnumSchema[]) {
   });
 }
 
-export async function getEnums(db: IDatabase<unknown, IClient>, query: QueryFile) {
-  return (await db.manyOrNone(query)) as IEnumSchema[];
+export async function getEnums(db: IDatabase<unknown, IClient>, query: QueryFile, schema: string) {
+  return (await db.manyOrNone(query, { schema: schema })) as IEnumSchema[];
 }
