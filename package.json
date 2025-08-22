@@ -1,26 +1,30 @@
 {
   "name": "postez",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "Generate TypeScript interfaces and enums from PostgreSQL database schemas with custom type mappings",
   "type": "commonjs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "postez": "./dist/cli.js"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "require": "./dist/index.js"
     },
     "./db": {
-      "types": "./dist/db.d.ts", 
+      "types": "./dist/db.d.ts",
       "require": "./dist/db.js"
     }
   },
   "scripts": {
-    "build": "bun run build:clean && tsc && cp -R sql dist/",
+    "build": "bun run build:clean && tsc && bun run build:cli && cp -R sql dist/ && chmod +x dist/cli.js",
     "build:clean": "rm -rf dist",
+    "build:cli": "bun build src/cli.ts --outfile dist/cli.js --target node --format cjs --external pg-promise --external prettier --external fs --external path --external os",
     "dev": "bun --watch src/index.ts",
     "test": "bun test",
-    "test:watch": "bun test --watch", 
+    "test:watch": "bun test --watch",
     "format": "prettier --write 'src/**/*.{ts,js,json}' 'test/**/*.{ts,js,json}'",
     "publish:patch": "bun run build && npm version patch && npm publish",
     "publish:minor": "bun run build && npm version minor && npm publish",

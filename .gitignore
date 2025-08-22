@@ -111,3 +111,4 @@ sql/ddl.sql
 
 types.ts
 test-output/
+postez.config.example.*

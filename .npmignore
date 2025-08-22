@@ -1,4 +1,11 @@
-src
+src/
+test/
+*.test.ts
 tsconfig.json
 tslint.json
-.prettierrc
+.prettierrc*
+bunfig.toml
+bun.lock
+postez.config.example.*
+test-output/
+CLAUDE.md
