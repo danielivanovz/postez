@@ -1,13 +1,13 @@
-import * as fs from 'fs';
-import * as prettier from 'prettier';
-import { EOL } from 'os';
-import { IDatabase } from 'pg-promise';
-import { IClient } from 'pg-promise/typescript/pg-subset';
+import * as fs from 'fs'
+import * as prettier from 'prettier'
+import { EOL } from 'os'
+import { IDatabase } from 'pg-promise'
+import { IClient } from 'pg-promise/typescript/pg-subset'
 
-import pg from './db';
+import pg from './db'
 
-import { IEnumSchema, ITypesSchema } from './types';
-import { parseTableNames, getEnums, parseEnumTypes, parseInterfaces, parseCustomType } from './parsers';
+import { IEnumSchema, ITypesSchema } from './types'
+import { parseTableNames, getEnums, parseEnumTypes, parseInterfaces, parseCustomType } from './parsers'
 
 export const defaultTypesSchema: ITypesSchema = {
   string: [
@@ -40,31 +40,33 @@ export const defaultTypesSchema: ITypesSchema = {
       definition: 'export interface Coordinates { x: number; y: number; }',
     },
   ],
-};
+}
 
 export function sanitizeName(name: string, prefix: string = '', splitters: string[] = ['_', '-']) {
   return name
     .split(new RegExp(splitters.join('|')))
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join('')
-    .replace(/^/, `${prefix}`);
+    .replace(/^/, `${prefix}`)
 }
 
 export function generateEnumMap(enums: IEnumSchema[]) {
   return enums.reduce((acc: Map<string, string[]>, curr) => {
-    acc.set(curr.enum_name, curr.enum_value.split(','));
-    return acc;
-  }, new Map());
+    acc.set(curr.enum_name, curr.enum_value.split(','))
+    return acc
+  }, new Map())
 }
 
 export async function writeToFile(path: string, content: string[], name: string) {
-  if (!fs.existsSync(path)) fs.mkdirSync(path);
-  const _path = path + `/${name}.ts`;
+  if (!fs.existsSync(path)) fs.mkdirSync(path)
+  const _path = path + `/${name}.ts`
 
-  fs.writeFileSync(
-    _path,
-    prettier.format(content.join(EOL), { ...(await prettier.resolveConfig(path)), filepath: _path }),
-  );
+  const formattedContent = await prettier.format(content.join(EOL), {
+    ...(await prettier.resolveConfig(path)),
+    filepath: _path,
+  })
+
+  fs.writeFileSync(_path, formattedContent)
 }
 
 /**
@@ -81,22 +83,22 @@ export async function main(
   typesSchema: ITypesSchema = defaultTypesSchema,
   schema: string = 'public',
 ) {
-  const tables = await parseTableNames(db, pg.sql('select-table-names'), schema);
-  const views = await parseTableNames(db, pg.sql('select-view-names'), schema);
-  const enums = await getEnums(db, pg.sql('select-enum-names'), schema);
+  const tables = await parseTableNames(db, pg.sql('select-table-names'), schema)
+  const views = await parseTableNames(db, pg.sql('select-view-names'), schema)
+  const enums = await getEnums(db, pg.sql('select-enum-names'), schema)
 
-  const _enums = await parseEnumTypes(enums);
+  const _enums = await parseEnumTypes(enums)
   const _interfaces = (
     await parseInterfaces(db, tables, pg.sql('select-table-information'), generateEnumMap(enums), typesSchema, schema)
   ).concat(
     await parseInterfaces(db, views, pg.sql('select-table-information'), generateEnumMap(enums), typesSchema, schema),
-  );
-  const _customTypes = parseCustomType(typesSchema);
+  )
+  const _customTypes = parseCustomType(typesSchema)
 
   try {
-    await writeToFile(outputPath, _enums.concat(_customTypes, _interfaces), 'types');
-    console.info('Succesfully generated files in:', outputPath);
+    await writeToFile(outputPath, _enums.concat(_customTypes, _interfaces), 'types')
+    console.info('Succesfully generated files in:', outputPath)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   }
 }

@@ -1,39 +1,33 @@
 {
   "name": "postez",
   "version": "2.0.1",
-  "description": "Utility tool for dynamically generate interfaces from PostgreSQL",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "bin": {
-    "postez": "./lib/cli.js"
+  "description": "Generate TypeScript interfaces and enums from PostgreSQL database schemas with custom type mappings",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js"
+    },
+    "./db": {
+      "types": "./dist/db.d.ts", 
+      "require": "./dist/db.js"
+    }
   },
   "scripts": {
-    "compile": "npm run format && npm run lint",
-    "compile:dev": "npm run format && npm run lint && npm run watch",
-    "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags",
-    "start:dev": "npm run nodemon",
-    "prebuild": "npm run compile",
-    "build": "npm run build:prod && npm run copy",
-    "build:prod": "tsc --build",
-    "copy": "cp -R sql lib",
-    "nodemon": "nodemon dist/index.js",
-    "watch": "npm run copy && tsc -w",
-    "lint": "tslint -p tsconfig.json",
-    "format": "prettier --write 'src/**/*.{ts,js,json}'",
-    "minor": "npm run build && npm version minor && npm publish && npm publish --tag next",
-    "major": "npm run build && npm version major && npm publish && npm publish --tag next",
-    "patch": "npm run build && npm version patch && npm publish && npm publish --tag next",
-    "dev": "bun run src/index.ts",
+    "build": "bun run build:clean && tsc && cp -R sql dist/",
+    "build:clean": "rm -rf dist",
+    "dev": "bun --watch src/index.ts",
     "test": "bun test",
-    "test:watch": "bun test --watch",
-    "bun:build": "bun run build:prod && bun run copy",
-    "bun:dev": "bun --watch src/index.ts",
-    "bun:format": "bun run format",
-    "bun:lint": "bun run lint"
+    "test:watch": "bun test --watch", 
+    "format": "prettier --write 'src/**/*.{ts,js,json}' 'test/**/*.{ts,js,json}'",
+    "publish:patch": "bun run build && npm version patch && npm publish",
+    "publish:minor": "bun run build && npm version minor && npm publish",
+    "publish:major": "bun run build && npm version major && npm publish"
   },
   "files": [
-    "lib/**/*"
+    "dist/**/*"
   ],
   "repository": {
     "type": "git",
@@ -47,17 +41,10 @@
   "homepage": "https://github.com/danielivanovz/postez#readme",
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/node": "^17.0.21",
-    "@types/prettier": "^2.6.0",
-    "eslint": "^8.10.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.0.0",
+    "@types/node": "^20.0.0",
     "pg-mem": "^3.0.5",
-    "prettier": "^2.6.2",
-    "ts-node": "^10.6.0",
-    "tslint": "^6.1.3",
-    "tslint-config-prettier": "^1.18.0",
-    "typescript": "^4.6.2"
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0"
   },
   "dependencies": {
     "pg-promise": "^10.11.1"

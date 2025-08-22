@@ -1,15 +1,21 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "ES2022",
     "module": "commonjs",
+    "lib": ["ES2022"],
     "declaration": true,
-    "outDir": "./lib",
-    "strict": false,
+    "outDir": "./dist",
+    "strict": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
-    "types": []
+    "forceConsistentCasingInFileNames": true,
+    "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": false
   },
   "include": ["src"],
-  "exclude": ["node_modules", "**/__tests__/*", "**/*.test.ts", "test/**/*", "lib/**/*"]
+  "exclude": ["node_modules", "**/__tests__/*", "**/*.test.ts", "test/**/*", "dist/**/*", "src/cli.ts"]
 }
