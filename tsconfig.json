@@ -5,9 +5,11 @@
     "declaration": true,
     "outDir": "./lib",
     "strict": false,
-		"moduleResolution": "node",
-		"esModuleInterop": true
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": []
   },
   "include": ["src"],
-  "exclude": ["node_modules", "**/__tests__/*"]
+  "exclude": ["node_modules", "**/__tests__/*", "**/*.test.ts", "test/**/*", "lib/**/*"]
 }

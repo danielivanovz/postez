@@ -6,14 +6,17 @@ import { sanitizeName } from '../utilities';
 export async function parseEnumTypes(enums: IEnumSchema[]) {
   return enums.map((e) => {
     const enumName = sanitizeName(e.enum_name, 'E');
-    const enumValues = e.enum_value.split(',').map((x) => x.trim().replace(/ /g, '_'));
-
+    const originalValues = e.enum_value.split(',').map((x) => x.trim());
+    
     return `export enum ${enumName} {
-		${enumValues.map((value) => `"${value}" = '${value.trim()}'`).join(',\n')}
+		${originalValues.map((value) => {
+      const safeKey = value.replace(/ /g, '_');
+      return `"${safeKey}" = '${value}'`;
+    }).join(',\n')}
 		}`;
   });
 }
 
 export async function getEnums(db: IDatabase<unknown, IClient>, query: QueryFile, schema: string) {
-  return (await db.manyOrNone(query, { schema: schema })) as IEnumSchema[];
+  return (await db.manyOrNone(query, { schema })) as IEnumSchema[];
 }

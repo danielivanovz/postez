@@ -24,7 +24,7 @@ export const defaultTypesSchema: ITypesSchema = {
     'interval',
     'name',
   ],
-  number: ['int2', 'int4', 'int8', 'float4', 'float8', 'numeric', 'money', 'oid'],
+  number: ['int2', 'int4', 'int8', 'float4', 'float8', 'numeric', 'money', 'oid', 'integer', 'float'],
   boolean: ['bool', 'boolean'],
   Date: ['date', 'timestamp', 'timestamptz'],
   'Array<number>': ['_int2', '_int4', '_int8', '_float4', '_float8', '_numeric', '_money'],

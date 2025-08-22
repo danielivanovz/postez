@@ -32,7 +32,17 @@ export type StringType =
   | 'interval'
   | 'name';
 
-export type NumberType = 'int2' | 'int4' | 'int8' | 'float4' | 'float8' | 'numeric' | 'money' | 'oid';
+export type NumberType =
+  | 'int2'
+  | 'int4'
+  | 'int8'
+  | 'float4'
+  | 'float8'
+  | 'numeric'
+  | 'money'
+  | 'oid'
+  | 'integer'
+  | 'float';
 export type BooleanType = 'bool' | 'boolean';
 export type ObjectType = 'json' | 'jsonb';
 export type NumberArrayType = '_int2' | '_int4' | '_int8' | '_float4' | '_float8' | '_numeric' | '_money';

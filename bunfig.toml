@@ -1,0 +1,19 @@
+[install]
+# Auto-install peer dependencies
+auto = true
+
+# Use npm registry
+registry = "https://registry.npmjs.org"
+
+[test]
+# Test files pattern
+preload = ["./test/setup.ts"]
+
+[run]
+# Enable TypeScript support
+typescript = true
+
+# Watch mode ignore patterns
+watch = {
+  ignore = ["lib/**", "node_modules/**", "*.log", "coverage/**"]
+}

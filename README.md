@@ -1,5 +1,5 @@
 <h1 align="center">postez</h1>
-<h6 align="center">Utility tool for dynamically generate interfaces and types from PostgreSQL using custom schema.</h5>
+<h6 align="center">Generate TypeScript interfaces and enums from PostgreSQL database schemas with custom type mappings.</h5>
 <br>
 
 ## Usage

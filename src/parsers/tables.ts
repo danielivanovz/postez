@@ -6,5 +6,5 @@ export async function parseTableNames(
   query: QueryFile,
   schema: string,
 ): Promise<string[]> {
-  return await db.map<string>(query, { schema: schema }, (row: { table_name: string }) => row.table_name);
+  return await db.map<string>(query, { schema }, (row: { table_name: string }) => row.table_name);
 }

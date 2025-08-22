@@ -4,6 +4,9 @@
   "description": "Utility tool for dynamically generate interfaces from PostgreSQL",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "bin": {
+    "postez": "./lib/cli.js"
+  },
   "scripts": {
     "compile": "npm run format && npm run lint",
     "compile:dev": "npm run format && npm run lint && npm run watch",
@@ -20,7 +23,14 @@
     "format": "prettier --write 'src/**/*.{ts,js,json}'",
     "minor": "npm run build && npm version minor && npm publish && npm publish --tag next",
     "major": "npm run build && npm version major && npm publish && npm publish --tag next",
-    "patch": "npm run build && npm version patch && npm publish && npm publish --tag next"
+    "patch": "npm run build && npm version patch && npm publish && npm publish --tag next",
+    "dev": "bun run src/index.ts",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "bun:build": "bun run build:prod && bun run copy",
+    "bun:dev": "bun --watch src/index.ts",
+    "bun:format": "bun run format",
+    "bun:lint": "bun run lint"
   },
   "files": [
     "lib/**/*"
@@ -36,11 +46,13 @@
   },
   "homepage": "https://github.com/danielivanovz/postez#readme",
   "devDependencies": {
+    "@types/bun": "latest",
     "@types/node": "^17.0.21",
     "@types/prettier": "^2.6.0",
     "eslint": "^8.10.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "pg-mem": "^3.0.5",
     "prettier": "^2.6.2",
     "ts-node": "^10.6.0",
     "tslint": "^6.1.3",

@@ -18,7 +18,7 @@ export async function parseInterfaces(
     tableNamesCollection.map(async (tableName) => {
       const informationSchema = (await db.manyOrNone(selectInformationSchema, {
         table_name: tableName,
-        schema: schema,
+        schema,
       })) as IInterfaces[];
 
       const currInterface = informationSchema.reduce((acc, curr) => {
