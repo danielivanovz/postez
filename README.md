@@ -27,7 +27,7 @@ postez --config postez.config.json --watch
 
 ### Config File Examples
 
-**Note**: When using the globally installed CLI (`npm install -g postez`), only JSON config files are supported. TypeScript config files work only when running locally with Bun.
+**Note**: When using the globally installed CLI (`npm install -g postez`), only JSON config files are supported. TypeScript config files work when running locally with Bun or Node.js (requires `ts-node` for Node.js environments).
 
 #### Basic Configuration (`postez.config.json`):
 
@@ -48,6 +48,7 @@ postez --config postez.config.json --watch
 #### Advanced Configuration with Custom Types (`postez.config.json`):
 
 Use custom type schemas when you need to:
+
 - Map specific PostgreSQL types to custom TypeScript types
 - Handle PostGIS geometry types
 - Override default type mappings
@@ -57,7 +58,7 @@ Use custom type schemas when you need to:
 {
   "database": {
     "host": "localhost",
-    "port": "5432", 
+    "port": "5432",
     "database": "mydb",
     "user": "postgres",
     "password": "password"
@@ -79,7 +80,7 @@ Use custom type schemas when you need to:
         "definition": "export interface GeoPoint { lat: number; lng: number; }"
       },
       {
-        "name": "geometry", 
+        "name": "geometry",
         "type": "GeoShape",
         "definition": "export interface GeoShape { type: string; coordinates: number[][]; }"
       }

@@ -1,20 +1,22 @@
 ---
-description: Use Bun instead of Node.js, npm, pnpm, or vite.
+description: Prefer Bun when available, but support both Bun and npm/Node.js.
 globs: "*.ts, *.tsx, *.html, *.css, *.js, *.jsx, package.json"
 alwaysApply: false
 ---
 
-Default to using Bun instead of Node.js.
+Prefer Bun when available, but ensure compatibility with npm/Node.js.
 
-- Use `bun <file>` instead of `node <file>` or `ts-node <file>`
-- Use `bun test` instead of `jest` or `vitest`
-- Use `bun build <file.html|file.ts|file.css>` instead of `webpack` or `esbuild`
-- Use `bun install` instead of `npm install` or `yarn install` or `pnpm install`
-- Use `bun run <script>` instead of `npm run <script>` or `yarn run <script>` or `pnpm run <script>`
+- Use `bun <file>` instead of `node <file>` or `ts-node <file>` (when Bun is available)
+- Use `bun test` instead of `jest` or `vitest` (when Bun is available)
+- Use `bun build <file.html|file.ts|file.css>` instead of `webpack` (when Bun is available)
+- Use `bun install` instead of `npm install` or `yarn install` or `pnpm install` (when Bun is available)
+- Use `bun run <script>` instead of `npm run <script>` (when Bun is available)
+- For npm compatibility, use `esbuild` for bundling and `ts-node` for TypeScript execution
 - Bun automatically loads .env, so don't use dotenv.
 
 ## APIs
 
+When using Bun:
 - `Bun.serve()` supports WebSockets, HTTPS, and routes. Don't use `express`.
 - `bun:sqlite` for SQLite. Don't use `better-sqlite3`.
 - `Bun.redis` for Redis. Don't use `ioredis`.
@@ -23,9 +25,18 @@ Default to using Bun instead of Node.js.
 - Prefer `Bun.file` over `node:fs`'s readFile/writeFile
 - Bun.$`ls` instead of execa.
 
+When using Node.js/npm:
+- Use `express` or `fastify` for HTTP servers
+- Use `better-sqlite3` for SQLite
+- Use `ioredis` for Redis
+- Use `pg-promise` (already in use) for Postgres
+- Use `ws` for WebSockets
+- Use `node:fs` for file operations
+- Use `execa` for process execution
+
 ## Testing
 
-Use `bun test` to run tests.
+Use `bun test` when Bun is available, or `npm run test:node` for Node.js compatibility.
 
 ```ts#index.test.ts
 import { test, expect } from "bun:test";
@@ -35,9 +46,13 @@ test("hello world", () => {
 });
 ```
 
+For Node.js compatibility, tests can also use the built-in test runner with `node --test`.
+
 ## Frontend
 
-Use HTML imports with `Bun.serve()`. Don't use `vite`. HTML imports fully support React, CSS, Tailwind.
+Prefer HTML imports with `Bun.serve()` when Bun is available. Don't use `vite`. HTML imports fully support React, CSS, Tailwind.
+
+When using Node.js, use a bundler like `vite` or `webpack` for frontend development.
 
 Server:
 

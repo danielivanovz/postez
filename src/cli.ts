@@ -154,9 +154,23 @@ async function loadConfig(configPath: string): Promise<PostezConfig> {
 
   try {
     if (fullPath.endsWith('.ts')) {
-      // Use Bun's native TypeScript support
-      const config = await import(fullPath)
-      return config.default || config
+      // Support both Bun and Node.js for TypeScript config files
+      try {
+        // Try Bun's native TypeScript support first
+        const config = await import(fullPath)
+        return config.default || config
+      } catch (bunError) {
+        // Fallback to ts-node for Node.js environments
+        try {
+          const tsNode = require('ts-node')
+          tsNode.register()
+          delete require.cache[require.resolve(fullPath)] // Clear cache
+          const config = require(fullPath)
+          return config.default || config
+        } catch (tsNodeError) {
+          throw new Error(`Failed to load TypeScript config. Install ts-node for Node.js: npm install -D ts-node`)
+        }
+      }
     } else if (fullPath.endsWith('.json')) {
       const content = readFileSync(fullPath, 'utf-8')
       return JSON.parse(content)
@@ -282,7 +296,8 @@ async function main() {
   }
 }
 
-if (import.meta.main) {
+// Support both Bun and Node.js runtime detection
+if ((import.meta as any).main || require.main === module) {
   main().catch((error: any) => {
     console.error(`❌ Unexpected error: ${error.message}`)
     process.exit(1)

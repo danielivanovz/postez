@@ -19,16 +19,22 @@
     }
   },
   "scripts": {
-    "build": "bun run build:clean && tsc && bun run build:cli && cp -R sql dist/ && chmod +x dist/cli.js",
+    "build": "npm run build:clean && tsc && npm run build:cli && cp -R sql dist/ && chmod +x dist/cli.js",
+    "build:bun": "bun run build:clean && tsc && bun run build:cli && cp -R sql dist/ && chmod +x dist/cli.js",
     "build:clean": "rm -rf dist",
-    "build:cli": "bun build src/cli.ts --outfile dist/cli.js --target node --format cjs --external pg-promise --external prettier --external fs --external path --external os",
-    "dev": "bun --watch src/index.ts",
-    "test": "bun test",
-    "test:watch": "bun test --watch",
+    "build:cli": "npx esbuild src/cli.ts --bundle --platform=node --format=cjs --external:pg-promise --external:prettier --external:fs --external:path --external:os --external:ts-node --outfile=dist/cli.js",
+    "build:cli:bun": "bun build src/cli.ts --outfile dist/cli.js --target node --format cjs --external pg-promise --external prettier --external fs --external path --external os",
+    "dev": "tsc --watch",
+    "dev:bun": "bun --watch src/index.ts",
+    "test": "npm run test:node",
+    "test:bun": "bun test",
+    "test:node": "which bun >/dev/null 2>&1 && bun test || echo 'Bun not found. Install Bun (https://bun.sh) to run tests, or use: bun test'",
+    "test:watch": "npm run test:node -- --watch",
+    "test:watch:bun": "bun test --watch",
     "format": "prettier --write 'src/**/*.{ts,js,json}' 'test/**/*.{ts,js,json}'",
-    "publish:patch": "bun run build && npm version patch && npm publish",
-    "publish:minor": "bun run build && npm version minor && npm publish",
-    "publish:major": "bun run build && npm version major && npm publish"
+    "publish:patch": "npm run build && npm version patch && npm publish",
+    "publish:minor": "npm run build && npm version minor && npm publish",
+    "publish:major": "npm run build && npm version major && npm publish"
   },
   "files": [
     "dist/**/*"
@@ -46,8 +52,10 @@
   "devDependencies": {
     "@types/bun": "latest",
     "@types/node": "^20.0.0",
+    "esbuild": "^0.19.0",
     "pg-mem": "^3.0.5",
     "prettier": "^3.0.0",
+    "ts-node": "^10.9.0",
     "typescript": "^5.0.0"
   },
   "dependencies": {
